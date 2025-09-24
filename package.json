@@ -1,47 +1,79 @@
 {
-  "name": "mx-bancos",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Catálogo completo de bancos mexicanos con códigos CLABE, sucursales y validación",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "files": ["dist", "data", "README.md", "LICENSE"],
+  "name": "mx-bancos"
+  "version": "1.0.0"
+  "type": "module"
+  "description": "Catálogo completo de bancos mexicanos con códigos CLABE y sucursales"
+  "main": "dist/index.js"
+  "module": "dist/index.esm.js"
+  "types": "dist/index.d.ts"
+  "files": [
+    "dist"
+    "README.md"
+    "LICENSE"
+  ]
   "scripts": {
-    "build": "microbundle --no-compress",
-    "build:prod": "microbundle",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint src/**/*.js",
-    "lint:fix": "eslint src/**/*.js --fix",
-    "prepare": "npm run build",
+    "build": "microbundle --no-compress"
+    "build:prod": "microbundle"
+    "test": "jest"
+    "test:watch": "jest --watch"
+    "test:coverage": "jest --coverage"
+    "lint": "eslint src/**/*.js"
+    "lint:fix": "eslint src/**/*.js --fix"
+    "prepare": "npm run build"
     "prepublishOnly": "npm run test && npm run lint && npm run build:prod"
-  },
-  "keywords": ["mexico", "bancos", "clabe", "banks", "financial", "sucursales"],
+    "version:patch": "npm version patch"
+    "version:minor": "npm version minor"
+    "version:major": "npm version major"
+  }
+  "keywords": [
+    "mexico"
+    "mexican"
+    "mx"
+  ]
   "author": {
-    "name": "Gerardo Lucero",
+    "name": "Gerardo Lucero"
     "email": "tu-email@ejemplo.com"
-  },
-  "license": "MIT",
+  }
+  "license": "MIT"
   "repository": {
-    "type": "git",
+    "type": "git"
     "url": "https://github.com/GerardoLucero/mx-bancos.git"
-  },
+  }
+  "bugs": {
+    "url": "https://github.com/GerardoLucero/mx-bancos/issues"
+  }
+  "homepage": "https://github.com/GerardoLucero/mx-bancos#readme"
+  "engines": {
+    "node": ">=18.0.0"
+  }
   "devDependencies": {
-    "@babel/core": "^7.23.0",
-    "@babel/preset-env": "^7.23.0",
-    "@eslint/js": "^8.57.0",
-    "babel-jest": "^29.7.0",
-    "eslint": "^8.57.0",
-    "jest": "^29.7.0",
+    "@babel/core": "^7.23.0"
+    "@babel/preset-env": "^7.23.0"
+    "@eslint/js": "^8.57.0"
+    "babel-jest": "^29.7.0"
+    "eslint": "^8.57.0"
+    "jest": "^29.7.0"
     "microbundle": "^0.15.1"
-  },
+  }
+  "dependencies": {
+    
+  }
   "jest": {
-    "testEnvironment": "node",
-    "transform": { "^.+\\.js$": "babel-jest" },
-    "collectCoverageFrom": ["src/**/*.js", "!src/**/*.test.js"],
+    "testEnvironment": "node"
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+    "collectCoverageFrom": [
+      "src/**/*.js"
+      "!src/**/*.test.js"
+    ]
     "coverageThreshold": {
-      "global": { "branches": 85, "functions": 90, "lines": 90, "statements": 90 }
+      "global": {
+        "branches": 85
+        "functions": 90
+        "lines": 90
+        "statements": 90
+      }
     }
   }
 }
