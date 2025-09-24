@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "ultimaActualizacion": "2024-09-24",
+    "fuente": "CNBV - Comisión Nacional Bancaria y de Valores",
+    "version": "1.0.0",
+    "totalBancos": 50
+  },
+  "bancos": {
+    "002": {
+      "codigo": "002",
+      "nombre": "BANAMEX",
+      "nombreCompleto": "Banco Nacional de México S.A.",
+      "nombreCorto": "Banamex",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-021-2345",
+      "website": "https://www.banamex.com",
+      "swift": "BNMXMXMM"
+    },
+    "012": {
+      "codigo": "012",
+      "nombre": "BBVA MEXICO",
+      "nombreCompleto": "BBVA México S.A.",
+      "nombreCorto": "BBVA",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-226-2282",
+      "website": "https://www.bbva.mx",
+      "swift": "BCMRMXMM"
+    },
+    "014": {
+      "codigo": "014",
+      "nombre": "SANTANDER",
+      "nombreCompleto": "Banco Santander México S.A.",
+      "nombreCorto": "Santander",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-762-7777",
+      "website": "https://www.santander.com.mx",
+      "swift": "BMSXMXMM"
+    },
+    "021": {
+      "codigo": "021",
+      "nombre": "HSBC",
+      "nombreCompleto": "HSBC México S.A.",
+      "nombreCorto": "HSBC",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-472-2472",
+      "website": "https://www.hsbc.com.mx",
+      "swift": "BIMEMXMM"
+    },
+    "030": {
+      "codigo": "030",
+      "nombre": "BAJIO",
+      "nombreCompleto": "Banco del Bajío S.A.",
+      "nombreCorto": "BanBajío",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-224-4646",
+      "website": "https://www.bb.com.mx",
+      "swift": "BCBAMXMM"
+    },
+    "032": {
+      "codigo": "032",
+      "nombre": "IXE",
+      "nombreCompleto": "IXE Banco S.A.",
+      "nombreCorto": "IXE",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-463-4932",
+      "website": "https://www.ixe.com.mx",
+      "swift": "IXEMXMXM"
+    },
+    "036": {
+      "codigo": "036",
+      "nombre": "INBURSA",
+      "nombreCompleto": "Banco Inbursa S.A.",
+      "nombreCorto": "Inbursa",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-464-6287",
+      "website": "https://www.inbursa.com",
+      "swift": "BCINSXMX"
+    },
+    "037": {
+      "codigo": "037",
+      "nombre": "INTERACCIONES",
+      "nombreCompleto": "Banco Interacciones S.A.",
+      "nombreCorto": "Interacciones",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-002-2828",
+      "website": "https://www.bancointeracciones.com",
+      "swift": "BINTMXMX"
+    },
+    "042": {
+      "codigo": "042",
+      "nombre": "MIFEL",
+      "nombreCompleto": "Banca Mifel S.A.",
+      "nombreCorto": "Mifel",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-464-3351",
+      "website": "https://www.mifel.com.mx",
+      "swift": "MIFEMXMX"
+    },
+    "044": {
+      "codigo": "044",
+      "nombre": "SCOTIABANK",
+      "nombreCompleto": "Scotiabank Inverlat S.A.",
+      "nombreCorto": "Scotiabank",
+      "tipo": "Múltiple",
+      "pais": "México",
+      "telefono": "800-472-6842",
+      "website": "https://www.scotiabank.com.mx",
+      "swift": "NOSCMXMX"
+    }
+  }
+}
