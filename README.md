@@ -1,152 +1,311 @@
-# mx-bancos
+# validador-fiscal-mx
 
-[![npm version](https://badge.fury.io/js/mx-bancos.svg)](https://www.npmjs.com/package/mx-bancos)
+[![npm version](https://badge.fury.io/js/validador-fiscal-mx.svg)](https://www.npmjs.com/package/validador-fiscal-mx)
+[![CI/CD Pipeline](https://github.com/GerardoLucero/validador-fiscal-mx/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/GerardoLucero/validador-fiscal-mx/actions)
+[![codecov](https://codecov.io/gh/GerardoLucero/validador-fiscal-mx/branch/main/graph/badge.svg)](https://codecov.io/gh/GerardoLucero/validador-fiscal-mx)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Catálogo completo de **50 bancos mexicanos** con códigos CLABE, sucursales y validación completa.
+Validación completa de RFC, CURP, NSS y otros identificadores fiscales mexicanos con detección automática de tipo y extracción de información.
 
 ## ✨ Características
 
-- 🏦 **50 bancos mexicanos** completos (todos los oficiales)
-- 🔍 **Búsqueda avanzada** por código y nombre
-- ✅ **Validación CLABE** con algoritmo oficial
-- 🧮 **Generación CLABE** para testing
-- 📊 **Información detallada** de cada banco
-- 🎯 **Extracción de datos** de cuentas CLABE
-- 📱 **Números telefónicos** y sitios web
-- 🌐 **Códigos SWIFT** internacionales
+- 🔍 **Validación completa** de RFC, CURP, NSS y cédulas profesionales
+- 🤖 **Detección automática** del tipo de identificador
+- 📊 **Extracción de datos** (fecha de nacimiento, sexo, estado, etc.)
+- 🛡️ **Validación robusta** con verificación de dígitos verificadores
+- 🚫 **Filtrado de palabras inconvenientes**
+- 📅 **Validación de fechas** incluyendo años bisiestos
+- 🌐 **Compatible con ES Modules y CommonJS**
+- 📦 **Sin dependencias externas**
+- ⚡ **Ligero y rápido**
 
 ## 🚀 Instalación
 
 ```bash
-npm install mx-bancos
+npm install validador-fiscal-mx
 ```
 
-## 📖 Uso
+## 📖 Uso Básico
 
 ```javascript
-import bancos from 'mx-bancos';
+import validadorFiscal from 'validador-fiscal-mx';
 
-// Obtener todos los bancos (50 bancos)
-const todosBancos = bancos.getBancos();
-console.log(todosBancos.length); // 50
+// Validar RFC
+const esRFCValido = validadorFiscal.validarRFC('PEGJ850115AB1');
+console.log(esRFCValido); // true
 
-// Buscar banco por código
-const banamex = bancos.buscarBanco('002');
-console.log(banamex.nombre); // 'BANAMEX'
-console.log(banamex.telefono); // '800-021-2345'
-console.log(banamex.swift); // 'BNMXMXMM'
+// Validar CURP
+const esCURPValida = validadorFiscal.validarCURP('PEGJ850115HJCRRL09');
+console.log(esCURPValida); // true
 
-// Buscar por nombre (case-insensitive)
-const resultados = bancos.buscarBancoPorNombre('Santander');
-console.log(resultados[0].nombreCompleto); // 'Banco Santander México S.A.'
+// Detectar tipo automáticamente
+const tipo = validadorFiscal.detectarTipo('12345678901');
+console.log(tipo); // 'NSS'
 
-// Validar CLABE (con algoritmo oficial)
-const esValida = bancos.validarCLABE('002010077777777771');
-console.log(esValida); // true
-
-// Extraer información completa de CLABE
-const info = bancos.extraerInfoCLABE('002010077777777771');
-console.log(info);
+// Validación completa con detalles
+const resultado = validadorFiscal.validarIdentificador('PEGJ850115AB1');
+console.log(resultado);
 /*
 {
-  clabe: '002010077777777771',
-  banco: { codigo: '002', nombre: 'BANAMEX', telefono: '800-021-2345', ... },
-  codigoBanco: '002',
-  codigoSucursal: '010',
-  numeroCuenta: '07777777777',
-  digitoVerificador: '1',
-  esValida: true
+  identificador: 'PEGJ850115AB1',
+  tipo: 'RFC',
+  esValido: true,
+  detalles: {
+    tipoPersona: 'FISICA',
+    iniciales: 'PEGJ',
+    fechaNacimiento: '15/01/1985',
+    homoclave: 'AB',
+    digitoVerificador: '1'
+  }
 }
 */
-
-// Generar CLABE para testing
-const clabe = bancos.generarCLABE('002', '010', '07777777777');
-console.log(clabe); // '002010077777777771'
-
-// Formatear CLABE para legibilidad
-const formateada = bancos.formatearCLABE('002010077777777771');
-console.log(formateada); // '002-010-07777777777-1'
 ```
 
-## 🔧 API
+## 🔧 API Completa
 
-### `getBancos(): Array`
-Obtiene todos los 50 bancos disponibles.
+### `validarRFC(rfc: string): boolean`
 
-### `buscarBanco(codigo: string): Object|null`
-Busca un banco por su código de 3 dígitos.
+Valida un RFC mexicano (persona física o moral).
 
-### `buscarBancoPorNombre(nombre: string): Array`
-Busca bancos por nombre (búsqueda parcial, case-insensitive).
+```javascript
+validadorFiscal.validarRFC('PEGJ850115AB1'); // true - Persona física
+validadorFiscal.validarRFC('ABC123456T1A'); // true - Persona moral
+validadorFiscal.validarRFC('INVALID123');   // false
+```
 
-### `validarCLABE(clabe: string): boolean`
-Valida una cuenta CLABE interbancaria usando el algoritmo oficial.
+### `validarCURP(curp: string): boolean`
 
-### `extraerInfoCLABE(clabe: string): Object|null`
-Extrae información detallada de una CLABE válida.
+Valida una CURP mexicana con verificación completa.
 
-### `generarCLABE(codigoBanco, codigoSucursal, numeroCuenta): string|null`
-Genera una CLABE válida para testing.
+```javascript
+validadorFiscal.validarCURP('PEGJ850115HJCRRL09'); // true
+validadorFiscal.validarCURP('GOJA920814MMCRNS04'); // true
+validadorFiscal.validarCURP('INVALID123456789');   // false
+```
 
-### `formatearCLABE(clabe: string): string`
-Formatea una CLABE para mejor legibilidad.
+### `validarNSS(nss: string): boolean`
 
-### `getEstadisticas(): Object`
-Obtiene estadísticas del catálogo de bancos.
+Valida un Número de Seguridad Social del IMSS.
 
-## 🏦 Bancos Incluidos (50 total)
+```javascript
+validadorFiscal.validarNSS('12345678901');    // true
+validadorFiscal.validarNSS('12-34-56-78901'); // true (con guiones)
+validadorFiscal.validarNSS('00000000000');    // false (patrón inválido)
+```
 
-### Bancos Principales
-- **Banamex** (002) - Banco Nacional de México
-- **BBVA México** (012) - BBVA México S.A.
-- **Santander** (014) - Banco Santander México
-- **HSBC** (021) - HSBC México
-- **Banorte** (072) - Banco Mercantil del Norte
-- **Scotiabank** (044) - Scotiabank Inverlat
+### `validarCedula(cedula: string): boolean`
 
-### Bancos de Desarrollo
-- **Bancomext** (006) - Banco Nacional de Comercio Exterior
-- **Banobras** (009) - Banco Nacional de Obras y Servicios Públicos
-- **Banjercito** (019) - Banco Nacional del Ejército, Fuerza Aérea y Armada
-- **Nafin** (135) - Nacional Financiera
-- **Bansefi** (166) - Banco del Ahorro Nacional
-- **SHF** (168) - Sociedad Hipotecaria Federal
+Valida una cédula profesional SEP.
 
-### Bancos Comerciales
-- **BanBajío** (030), **Inbursa** (036), **Mifel** (042)
-- **Banregio** (058), **Invex** (059), **Afirme** (062)
-- **Azteca** (116), **Compartamos** (130), **Bancoppel** (137)
-- **Actinver** (133), **CIBanco** (143), **Banco Base** (145)
+```javascript
+validadorFiscal.validarCedula('1234567');  // true (7 dígitos)
+validadorFiscal.validarCedula('12345678'); // true (8 dígitos)
+validadorFiscal.validarCedula('1111111');  // false (todos iguales)
+```
 
-### Bancos Extranjeros
-- **American Express** (103), **Bank of America** (106)
-- **JP Morgan** (110), **Deutsche Bank** (124)
-- **Credit Suisse** (113), **UBS Bank** (139)
-- **Barclays** (129), **MUFG** (108)
+### `detectarTipo(identificador: string): string`
 
-### Casas de Bolsa
-- **Monex** (600), **GBM** (601), **Masari** (602)
+Detecta automáticamente el tipo de identificador.
 
-## �� Tests
+```javascript
+validadorFiscal.detectarTipo('PEGJ850115AB1');      // 'RFC'
+validadorFiscal.detectarTipo('PEGJ850115HJCRRL09'); // 'CURP'
+validadorFiscal.detectarTipo('12345678901');        // 'NSS'
+validadorFiscal.detectarTipo('1234567');            // 'CEDULA'
+validadorFiscal.detectarTipo('INVALID');            // 'DESCONOCIDO'
+```
+
+### `validarIdentificador(identificador: string): object`
+
+Validación completa con extracción de información.
+
+```javascript
+const resultado = validadorFiscal.validarIdentificador('PEGJ850115HJCRRL09');
+/*
+{
+  identificador: 'PEGJ850115HJCRRL09',
+  tipo: 'CURP',
+  esValido: true,
+  detalles: {
+    iniciales: 'PEGJ',
+    fechaNacimiento: '15/01/1985',
+    sexo: 'HOMBRE',
+    estadoNacimiento: 'HIDALGO',
+    consonantesInternas: 'RRL',
+    digitoVerificador: '9'
+  }
+}
+*/
+```
+
+## 🎯 Ejemplos Avanzados
+
+### Validación por lotes
+
+```javascript
+const identificadores = [
+  'PEGJ850115AB1',
+  'PEGJ850115HJCRRL09',
+  '12345678901',
+  'INVALID123'
+];
+
+const resultados = identificadores.map(id => 
+  validadorFiscal.validarIdentificador(id)
+);
+
+const validos = resultados.filter(r => r.esValido);
+console.log(`${validos.length} de ${identificadores.length} son válidos`);
+```
+
+### Extracción de información específica
+
+```javascript
+function analizarRFC(rfc) {
+  const resultado = validadorFiscal.validarIdentificador(rfc);
+  
+  if (resultado.esValido && resultado.tipo === 'RFC') {
+    const { detalles } = resultado;
+    return {
+      esPersonaFisica: detalles.tipoPersona === 'FISICA',
+      fechaNacimiento: detalles.fechaNacimiento,
+      iniciales: detalles.iniciales
+    };
+  }
+  
+  return null;
+}
+
+const info = analizarRFC('PEGJ850115AB1');
+console.log(info);
+// { esPersonaFisica: true, fechaNacimiento: '15/01/1985', iniciales: 'PEGJ' }
+```
+
+### Validación con manejo de errores
+
+```javascript
+function validarDocumento(documento, tipoEsperado = null) {
+  try {
+    const resultado = validadorFiscal.validarIdentificador(documento);
+    
+    if (!resultado.esValido) {
+      throw new Error(`Documento inválido: ${documento}`);
+    }
+    
+    if (tipoEsperado && resultado.tipo !== tipoEsperado) {
+      throw new Error(`Se esperaba ${tipoEsperado}, pero se detectó ${resultado.tipo}`);
+    }
+    
+    return resultado;
+    
+  } catch (error) {
+    console.error('Error de validación:', error.message);
+    return null;
+  }
+}
+
+// Uso
+const resultado = validarDocumento('PEGJ850115AB1', 'RFC');
+```
+
+## 🧪 Testing
 
 ```bash
+# Ejecutar tests
 npm test
+
+# Tests con coverage
 npm run test:coverage
+
+# Tests en modo watch
+npm run test:watch
 ```
 
-## 📊 Estadísticas
+## 📋 Formatos Soportados
 
-- **50 bancos** incluidos
-- **100% de cobertura** de tests
-- **Validación CLABE** con algoritmo oficial
-- **Información completa**: teléfonos, sitios web, códigos SWIFT
-- **Actualizado 2024** con datos oficiales de CNBV
+### RFC (Registro Federal de Contribuyentes)
+- **Persona Física**: 4 letras + 6 dígitos + 3 caracteres alfanuméricos
+- **Persona Moral**: 3 letras + 6 dígitos + 3 caracteres alfanuméricos
+- Ejemplo: `PEGJ850115AB1`, `ABC123456T1A`
+
+### CURP (Clave Única de Registro de Población)
+- 18 caracteres: 4 letras + 6 dígitos + H/M + 2 letras + 3 letras + 1 dígito/letra + 1 dígito
+- Ejemplo: `PEGJ850115HJCRRL09`
+
+### NSS (Número de Seguridad Social)
+- 11 dígitos (con o sin guiones)
+- Ejemplo: `12345678901`, `12-34-56-78901`
+
+### Cédula Profesional
+- 7 u 8 dígitos
+- Ejemplo: `1234567`, `12345678`
+
+## 🔒 Validaciones Implementadas
+
+- ✅ Formato y estructura correcta
+- ✅ Fechas de nacimiento válidas (incluyendo años bisiestos)
+- ✅ Estados válidos en CURP
+- ✅ Sexo válido en CURP (H/M)
+- ✅ Dígitos verificadores correctos
+- ✅ Filtrado de palabras inconvenientes
+- ✅ Patrones de números consecutivos o repetitivos
+- ✅ Rangos de fechas lógicos
+
+## 🌐 Compatibilidad
+
+- ✅ Node.js 14+
+- ✅ Navegadores modernos (ES2020+)
+- ✅ ES Modules
+- ✅ CommonJS
+- ✅ TypeScript (definiciones incluidas)
+
+## 🤝 Contribuir
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -m 'feat: agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+### Convenciones de Commits
+
+- `feat:` - Nueva funcionalidad
+- `fix:` - Corrección de bugs
+- `docs:` - Cambios en documentación
+- `test:` - Agregar o modificar tests
+- `refactor:` - Refactoring de código
+- `chore:` - Tareas de mantenimiento
 
 ## 📄 Licencia
 
-MIT © Gerardo Lucero
+MIT © [Gerardo Lucero](https://github.com/GerardoLucero)
+
+## 🔗 Enlaces
+
+- [Documentación completa](https://github.com/GerardoLucero/validador-fiscal-mx)
+- [NPM Package](https://www.npmjs.com/package/validador-fiscal-mx)
+- [Reportar Issues](https://github.com/GerardoLucero/validador-fiscal-mx/issues)
+- [Changelog](https://github.com/GerardoLucero/validador-fiscal-mx/releases)
 
 ---
 
-**El catálogo de bancos mexicanos más completo disponible en NPM** 🇲🇽
+Desarrollado con ❤️ para la comunidad mexicana de desarrolladores.
+
+<!-- DONATIONS-START -->
+## 💖 Apoya 
+
+<!-- BADGES-DONATIONS-START -->
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Donate-orange?logo=ko-fi)](https://ko-fi.com/gerardolucero)
+[![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/lucerorios0)
+<!-- BADGES-DONATIONS-END -->
+
+
+Si estos paquetes te ayudan (RFC, ISR, Nómina, Bancos, Feriados, Nombres, Códigos Postales, Validadores), considera invitarme un café o apoyar el mantenimiento:
+
+- [Ko-fi](https://ko-fi.com/gerardolucero)
+- [Buy Me a Coffee](https://buymeacoffee.com/lucerorios0)
+
+> Gracias por tu apoyo 🙌. Priorizaré issues/PRs con **contexto de uso en México** (SAT/IMSS/INFONAVIT, bancos, feriados) y publicaré avances en los READMEs.
+<!-- DONATIONS-END -->
