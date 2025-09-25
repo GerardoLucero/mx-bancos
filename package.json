@@ -1,6 +1,6 @@
 {
   "name": "mx-bancos",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "Catálogo completo de bancos mexicanos con códigos CLABE y sucursales",
   "main": "dist/index.js",
