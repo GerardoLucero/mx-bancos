@@ -6,6 +6,7 @@
 <!-- BADGES-DONATIONS-END -->
 
 [![npm version](https://badge.fury.io/js/mx-bancos.svg)](https://badge.fury.io/js/mx-bancos)
+[![npm downloads](https://img.shields.io/npm/dm/mx-bancos.svg)](https://www.npmjs.com/package/mx-bancos)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Catálogo completo de **bancos mexicanos** con validación y generación de CLABE, códigos bancarios oficiales y información detallada de instituciones financieras.
