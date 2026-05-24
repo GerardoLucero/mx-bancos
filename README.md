@@ -1,34 +1,32 @@
 # MX Bancos
 
-<!-- BADGES-DONATIONS-START -->
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-Donate-orange?logo=ko-fi)](https://ko-fi.com/gerardolucero)
-[![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/lucerorios0)
-<!-- BADGES-DONATIONS-END -->
+Catálogo completo de bancos mexicanos con validación y generación de CLABE, códigos bancarios oficiales e información detallada de instituciones financieras.
 
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=flat&logo=ko-fi&logoColor=white)](https://ko-fi.com/gerardolucero)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/lucerorios0)
+[![GitHub Stars](https://img.shields.io/github/stars/GerardoLucero/mx-bancos?style=social)](https://github.com/GerardoLucero/mx-bancos)
 [![npm version](https://badge.fury.io/js/mx-bancos.svg)](https://badge.fury.io/js/mx-bancos)
 [![npm downloads](https://img.shields.io/npm/dm/mx-bancos.svg)](https://www.npmjs.com/package/mx-bancos)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Catálogo completo de **bancos mexicanos** con validación y generación de CLABE, códigos bancarios oficiales y información detallada de instituciones financieras.
+## Features
 
-## 🚀 Características
+- **50+ bancos mexicanos** — catálogo completo y actualizado
+- **Validación de CLABE** — algoritmo oficial con dígito verificador
+- **Generación de CLABE** — crear cuentas válidas automáticamente
+- **Códigos bancarios oficiales** — números de institución BANXICO
+- **Información completa** — nombres, abreviaciones, sitios web
+- **Búsqueda avanzada** — por nombre, código, abreviación
+- **TypeScript ready** — definiciones de tipos incluidas
+- **Sin dependencias** — librería ligera y rápida
 
-- ✅ **50+ bancos mexicanos** - Catálogo completo y actualizado
-- ✅ **Validación de CLABE** - Algoritmo oficial con dígito verificador
-- ✅ **Generación de CLABE** - Crear cuentas válidas automáticamente
-- ✅ **Códigos bancarios oficiales** - Números de institución BANXICO
-- ✅ **Información completa** - Nombres, abreviaciones, sitios web
-- ✅ **Búsqueda avanzada** - Por nombre, código, abreviación
-- ✅ **TypeScript ready** - Definiciones de tipos incluidas
-- ✅ **Sin dependencias** - Librería ligera y rápida
-
-## 📦 Instalación
+## Instalación
 
 ```bash
 npm install mx-bancos
 ```
 
-## 🔧 Uso
+## Uso
 
 ```javascript
 // ES6 Modules
@@ -51,7 +49,7 @@ const clabe = generarCLABE('002', '12345', '1234567890');
 console.log(clabe); // 002123451234567897
 ```
 
-## 🏦 Bancos Incluidos
+## Bancos incluidos
 
 | Código | Banco | Abreviación |
 |--------|-------|-------------|
@@ -64,7 +62,7 @@ console.log(clabe); // 002123451234567897
 | 036 | Banco Inbursa | INBURSA |
 | 044 | Scotiabank Inverlat | SCOTIABANK |
 
-## 🔢 Estructura de CLABE
+## Estructura de CLABE
 
 ```
 002 12345 1234567890 7
@@ -75,21 +73,10 @@ console.log(clabe); // 002123451234567897
 └───────────────────────── Código de banco
 ```
 
-## 📄 Licencia
+## Licencia
 
 MIT © [Gerardo Lucero](https://github.com/GerardoLucero)
 
 ---
 
-**¿Necesitas validar RFC también?** 👀 Revisa `validador-fiscal-mx` para validaciones fiscales completas.
-
-<!-- DONATIONS-START -->
-## 💖 Apoya el Ecosistema Mexicano OSS
-
-Si estos paquetes te ayudan (RFC, ISR, Nómina, Bancos, Feriados, Nombres, Códigos Postales, Validadores), considera invitarme un café o apoyar el mantenimiento:
-
-- [Ko-fi](https://ko-fi.com/gerardolucero)
-- [Buy Me a Coffee](https://buymeacoffee.com/lucerorios0)
-
-> Gracias por tu apoyo 🙌. Priorizaré issues/PRs con **contexto de uso en México** (SAT/IMSS/INFONAVIT, bancos, feriados) y publicaré avances en los READMEs.
-<!-- DONATIONS-END -->
+**¿Necesitas validar RFC también?** Revisa [`validador-fiscal-mx`](https://github.com/GerardoLucero/validador-fiscal-mx) para validaciones fiscales completas.
