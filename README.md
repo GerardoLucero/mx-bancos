@@ -1,22 +1,15 @@
-# MX Bancos
+# mx-bancos
 
-Catálogo completo de bancos mexicanos con validación y generación de CLABE, códigos bancarios oficiales e información detallada de instituciones financieras.
+Catálogo de los bancos e instituciones que participan en SPEI, tomado de Banco de México, más validación y generación de cuentas CLABE.
 
-[![npm version](https://badge.fury.io/js/mx-bancos.svg)](https://badge.fury.io/js/mx-bancos)
-[![npm downloads](https://img.shields.io/npm/dm/mx-bancos.svg)](https://www.npmjs.com/package/mx-bancos)
+[![npm](https://img.shields.io/npm/v/mx-bancos.svg)](https://www.npmjs.com/package/mx-bancos)
+[![CI](https://github.com/GerardoLucero/mx-bancos/actions/workflows/ci.yml/badge.svg)](https://github.com/GerardoLucero/mx-bancos/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/GerardoLucero/mx-bancos/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/GerardoLucero/mx-bancos/actions/workflows/ci-cd.yml)
 
-## Features
-
-- **50+ bancos mexicanos** — catálogo completo y actualizado
-- **Validación de CLABE** — algoritmo oficial con dígito verificador
-- **Generación de CLABE** — crear cuentas válidas automáticamente
-- **Códigos bancarios oficiales** — números de institución BANXICO
-- **Información completa** — nombres, abreviaciones, sitios web
-- **Búsqueda avanzada** — por nombre, código, abreviación
-- **TypeScript ready** — definiciones de tipos incluidas
-- **Sin dependencias** — librería ligera y rápida
+- 97 instituciones: banca múltiple, banca de desarrollo, participantes no bancarios (casas de bolsa, SOFIPOs, fintech como Nu, Mercado Pago o Spin by OXXO) y Banxico.
+- Cada institución trae su código CLABE de 3 dígitos y su clave SPEI de 5.
+- Valida el dígito verificador **y** que el banco siga participando en SPEI.
+- Sin dependencias y sin llamadas a internet. Funciona con `import` y `require` en Node 20 o superior, con tipos de TypeScript.
 
 ## Instalación
 
@@ -24,64 +17,92 @@ Catálogo completo de bancos mexicanos con validación y generación de CLABE, c
 npm install mx-bancos
 ```
 
-## Uso
+## Validar una CLABE
 
-```javascript
-// ES6 Modules
-import { getBancos, validarCLABE, generarCLABE, buscarBanco } from 'mx-bancos';
+```js
+import { validarCLABE, extraerInfoCLABE } from 'mx-bancos';
+// o: const { validarCLABE } = require('mx-bancos');
 
-// Obtener todos los bancos
-const bancos = getBancos();
-console.log(bancos.length); // 50+
+validarCLABE('002180000118359710');     // true
+validarCLABE('002 180 00011835971 0');  // true, acepta espacios y guiones
+validarCLABE('002180000118359711');     // false, digito verificador incorrecto
 
-// Buscar banco específico
-const banamex = buscarBanco('002');
-console.log(banamex.nombre); // 'Banco Nacional de México'
-
-// Validar CLABE
-const esValida = validarCLABE('012180001234567895');
-console.log(esValida); // true
-
-// Generar CLABE válida
-const clabe = generarCLABE('002', '12345', '1234567890');
-console.log(clabe); // 002123451234567897
+extraerInfoCLABE('012180012345678909');
+// {
+//   clabe: '012180012345678909',
+//   codigoBanco: '012',
+//   codigoPlaza: '180',
+//   numeroCuenta: '01234567890',
+//   digitoVerificador: '9',
+//   banco: { codigo: '012', claveSpei: '40012', nombre: 'BBVA MEXICO', tipo: 'Banca múltiple' }
+// }
 ```
 
-## Bancos incluidos
+`validarCLABE` también revisa que el banco esté en el catálogo vigente de SPEI. Una CLABE de un banco que ya desapareció, como IXE (`032`), tiene el dígito verificador correcto pero no puede recibir transferencias:
 
-| Código | Banco | Abreviación |
-|--------|-------|-------------|
-| 002 | Banco Nacional de México | BANAMEX |
-| 012 | Banco Mercantil del Norte | BANORTE |
-| 014 | Banco Santander México | SANTANDER |
-| 021 | HSBC México | HSBC |
-| 030 | Banco Bajío | BAJIO |
-| 032 | ING Bank México | ING |
-| 036 | Banco Inbursa | INBURSA |
-| 044 | Scotiabank Inverlat | SCOTIABANK |
-
-## Estructura de CLABE
-
-```
-002 12345 1234567890 7
-│   │     │          │
-│   │     │          └─ Dígito verificador
-│   │     └─────────────── Número de cuenta
-│   └───────────────────── Código de sucursal
-└───────────────────────── Código de banco
+```js
+validarCLABE('032180000118359719');                            // false
+validarCLABE('032180000118359719', { verificarBanco: false }); // true
+extraerInfoCLABE('032180000118359719').banco;                  // null
 ```
 
-## Apoyo
+## Buscar bancos
 
-Proyecto de código abierto mantenido en mi tiempo libre. Si te fue útil y quieres agradecerlo:
+```js
+import { buscarBanco, buscarBancoPorNombre, getBancos } from 'mx-bancos';
 
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=flat&logo=ko-fi&logoColor=white)](https://ko-fi.com/gerardolucero)
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/lucerorios0)
+buscarBanco('012');      // por codigo CLABE
+buscarBanco(12);         // tambien como numero
+buscarBanco('40012');    // por clave SPEI
+// { codigo: '012', claveSpei: '40012', nombre: 'BBVA MEXICO', tipo: 'Banca múltiple' }
+
+buscarBancoPorNombre('mercado pago'); // sin importar acentos ni mayusculas
+getBancos();                          // las 97 instituciones
+```
+
+## Generar CLABEs de prueba
+
+```js
+import { generarCLABE, formatearCLABE, calcularDigitoVerificador } from 'mx-bancos';
+
+generarCLABE('722', '969', '01234567890'); // '722969012345678902'
+generarCLABE('032', '180', '1');           // null, IXE ya no participa en SPEI
+formatearCLABE('002180000118359710');      // '002 180 00011835971 0'
+calcularDigitoVerificador('00218000011835971'); // 0
+```
+
+## API
+
+| Función | Devuelve |
+|---|---|
+| `getBancos()` | Todas las instituciones |
+| `buscarBanco(codigo)` | Institución por código CLABE o clave SPEI, o `null` |
+| `buscarBancoPorNombre(texto)` | Instituciones cuyo nombre contiene el texto |
+| `validarCLABE(clabe, { verificarBanco })` | `true` si es válida; `verificarBanco` es `true` por defecto |
+| `extraerInfoCLABE(clabe)` | Banco, plaza, cuenta y verificador, o `null` |
+| `generarCLABE(banco, plaza, cuenta)` | CLABE con verificador, o `null` |
+| `calcularDigitoVerificador(primeros17)` | Dígito de 0 a 9 |
+| `formatearCLABE(clabe)` | `'BBB PPP CCCCCCCCCCC V'` |
+| `getEstadisticas()` | Totales por tipo y fecha del catálogo |
+| `infoCatalogo()` | Fuente, URL y fecha |
+
+```js
+getEstadisticas();
+// { totalBancos: 97, porTipo: { 'Banco central': 1, 'Banca múltiple': 46, 'Banca de desarrollo': 6, 'Participante no bancario': 44 }, fechaCatalogo: '2026-11-19' }
+```
+
+## Datos
+
+- **Fuente:** lista de instituciones que publica [Banco de México](https://www.banxico.org.mx/cep/) en su servicio de Comprobante Electrónico de Pago (CEP), es decir, los participantes de SPEI.
+- **Fecha del catálogo incluido:** 2026-11-19. Hoy son 97 instituciones.
+- **Tipo:** se deduce del prefijo de la clave SPEI: `40` banca múltiple, `37` banca de desarrollo, `90` participante no bancario y `2` Banco de México.
+- **Nombres:** tal como los publica Banxico (por ejemplo `BBVA MEXICO`, `NUBANK`).
+- **Actualización:** `node scripts/actualizar-catalogo.mjs AAAA-MM-DD` descarga la lista y regenera `src/catalogo.js`. El script se detiene si el formato cambia o si dos instituciones comparten código.
+
+## Cambios
+
+Ver [CHANGELOG.md](CHANGELOG.md). La versión 2.0.0 cambia el catálogo y algunos campos.
 
 ## Licencia
 
-MIT © [Gerardo Lucero](https://github.com/GerardoLucero), ver [LICENSE](LICENSE).
-
----
-
-**¿Necesitas validar RFC también?** Revisa [`validador-fiscal-mx`](https://github.com/GerardoLucero/validador-fiscal-mx) para validaciones fiscales completas.
+MIT
