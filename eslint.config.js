@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 
 export default [
+  { ignores: ['src/catalogo.js'] },
   js.configs.recommended,
   {
     languageOptions: {
